@@ -1,9 +1,22 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import App from './App';
+import { MockedProvider } from '@apollo/react-testing';
+import { GET_CART_VISIBILITY_STATE } from './apollo/queries';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('should render without error', () => {
+  const isCartVisible = false;
+  const mocks = [
+    {
+      request: {
+        query: GET_CART_VISIBILITY_STATE
+      },
+      result: { data: { isCartVisible:isCartVisible } },
+    },
+  ];
+  render(
+  <MockedProvider mocks={mocks} addTypename={false}>
+      <App />
+  </MockedProvider>
+  );
 });

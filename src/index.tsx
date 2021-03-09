@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloProvider,ApolloClient,InMemoryCache, makeVar } from "@apollo/client";
+import { cache } from './apollo/cache';
+
+const client= new ApolloClient({
+    uri: "https://pangaea-interviews.now.sh/api/graphql",
+    cache:cache
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+     <ApolloProvider client={client}>
+     <App />
+     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
